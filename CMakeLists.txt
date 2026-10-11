@@ -26,6 +26,7 @@ include(cmake/SteamAPIBridge.cmake)
 include(cmake/ImageLibraries.cmake)
 betterspray_add_image_libraries()
 include(cmake/Sources.cmake)
+include(cmake/SourceGroups.cmake)
 
 add_library(betterspray_settings INTERFACE)
 target_compile_features(betterspray_settings INTERFACE cxx_std_20)
@@ -57,6 +58,7 @@ target_compile_definitions(betterspray_settings INTERFACE WIN32 _WINDOWS _MBCS
 target_compile_options(betterspray_settings INTERFACE /permissive- /W3 /wd4819 /wd4996)
 
 add_library(BetterSpray SHARED ${BETTERSPRAY_SOURCES})
+betterspray_assign_source_groups(BetterSpray)
 target_link_libraries(BetterSpray PRIVATE betterspray_settings FreeImage LibXml2::LibXml2 SteamAPIBridge)
 target_compile_definitions(BetterSpray PRIVATE BETTERSPRAY_EXPORTS _USRDLL)
 target_compile_options(BetterSpray PRIVATE /MP /sdl /Zi $<$<CONFIG:Release>:/Gy;/Oi>)
