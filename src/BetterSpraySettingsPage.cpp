@@ -221,6 +221,7 @@ void CBetterSpraySettingsPage::OpenLoadSparyDialog(void)
     vgui::surface()->GetScreenSize(sw, sh);
 
     auto pFileDialog = new vgui::FileOpenDialog(this, "#GameUI_BetterSpray_LoadSpray", vgui::FileOpenDialogType_t::FOD_OPEN, new KeyValues("FileInfo"));
+    pFileDialog->AddActionSignalTarget(this);
     pFileDialog->SetProportional(false);
     pFileDialog->SetAutoDelete(true);
     //pFileDialog->SetStartDirectory("svencoop_downloads/");
@@ -264,7 +265,7 @@ void CBetterSpraySettingsPage::OnDataChanged()
 void CBetterSpraySettingsPage::OnFileSelected(const char* fullpath)
 {
     wchar_t wszFullPath[MAX_PATH]{};
-    Q_UTF8ToUnicode(fullpath, wszFullPath, MAX_PATH);
+    Q_UTF8ToUnicode(fullpath, wszFullPath, sizeof(wszFullPath));
 
     auto fiFormat = FreeImage_GetFileTypeU(wszFullPath);
 

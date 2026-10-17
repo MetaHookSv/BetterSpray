@@ -92,4 +92,7 @@ python scripts/validate-gamedata.py install/x86/Release/svencoop/metahook/gameda
 
 Release 测试保留断言。覆盖主机 gamedata 调用和错误路径、PNG 透明通道/WebP 编解码、
 UTF-8 HTML/XPath 解析，以及 DLL 的两个工厂接口装载。
+文件系统测试在进程 ACP 65001 和 936 下创建、枚举中文及补充平面 Unicode 文件名，
+并检查目录操作。代码页由测试专用 manifest 指定，不修改系统设置；系统无法采用指定
+代码页时跳过对应测试（CP936 的选择需要 Windows 11）。
 编译与模拟测试不能证明游戏内喷漆、UI 或云分享行为已验证。

@@ -98,4 +98,8 @@ python scripts/validate-gamedata.py install/x86/Release/svencoop/metahook/gameda
 
 Tests retain assertions in Release. They cover host gamedata calls and error paths,
 PNG alpha/WebP round trips, UTF-8 HTML/XPath parsing and loading the DLL's two factories.
+The filesystem tests create Chinese and supplementary Unicode filenames, enumerate
+them, and check directory operations under process ACP 65001 and 936. Test-only
+manifests select the code page without changing system settings; a case is skipped
+when the OS cannot honor its requested code page (CP936 selection needs Windows 11).
 Compilation and simulated tests do not establish in-game spray, UI or cloud behavior.
