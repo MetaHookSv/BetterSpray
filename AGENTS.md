@@ -283,6 +283,14 @@ To modify or extend functionality, focus on these areas:
 - **Error handling**: Return status codes and print error messages to the console
 - **Resource management**: Use the `SCOPE_EXIT` macro to guarantee resource release
 
+## C/C++ formatting
+
+Owned C/C++ sources use the shared DiligentCore style from
+[MetaHookSv/FormatValidation](https://github.com/MetaHookSv/FormatValidation), pinned
+to clang-format 23.1.3. Setup, commands and the checked scope are recorded in
+`memory/CppFormatting.md` (`CppFormatting`). Do not hand-edit the generated
+`.clang-format`; change the shared style. Keep MSVC inline assembly in explicit blocks.
+
 ## Related Links
 
 - **MetaHookSV**: https://github.com/MetaHookSv/MetaHookSv
