@@ -206,7 +206,7 @@ RENDERER_ENGINE_ALL_FUNCTIONS = (
     "Mod_LoadModel", "Mod_LoadSpriteModel", "Mod_LoadStudioModel",
     "Mod_PointInLeaf", "Mod_UnloadSpriteTextures",
     "PVSNode", "R_AnimateLight", "R_BeamDrawList", "R_CheckVariables",
-    "R_CullBox", "R_ForceCVars", "R_FreeDeadParticles",
+    "R_CullBox", "R_DrawBrushModel", "R_DrawSpriteModel", "R_ForceCVars", "R_FreeDeadParticles",
     "R_GLStudioDrawPoints", "R_GetSpriteFrame", "R_NewMap",
     "R_RenderView", "R_ResetLatched",
     "R_StudioDrawModel", "R_StudioDrawPlayer", "R_StudioMergeBones", "R_StudioRenderFinal",
@@ -270,7 +270,7 @@ RENDERER_LEGACY_TEXALLOC_HL_PATCHES = (
 )
 RENDERER_MTEX_PROBE_FUNCTIONS = ("CheckMultiTextureExtensions",)
 RENDERER_INLINED_MTEX_PROBE_FUNCTIONS = ("DT_Initialize",)
-RENDERER_ENGINE_HL25_FUNCTIONS = ("CGame_DrawStartupVideo",)
+RENDERER_ENGINE_HL25_FUNCTIONS = ("CGame_DrawStartupVideo", "S_PrecacheSound", "S_StartDynamicSound", "S_Update")
 RENDERER_SETMODE_FUNCTIONS = ("GL_SetMode",)
 RENDERER_SETMODE_LEGACY_FUNCTIONS = ("GL_SetModeLegacy",)
 RENDERER_SDL_FUNCTIONS = ("SDL_InitGL",)
