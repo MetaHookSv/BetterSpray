@@ -187,6 +187,12 @@ RENDERER_SVEN_10257_GAMES = ("svencoop-10257",)
 RENDERER_INLINED_MTEX_PROBE_GAMES = ("hl-10210", "svencoop-10257", "svencoop-8948")
 RENDERER_MTEX_PROBE_GAMES = tuple(g for g in RENDERER_ALL_GAMES
                                   if g not in RENDERER_INLINED_MTEX_PROBE_GAMES)
+# The blob builds have no R_ForceCVars body (the force-cvar logic is inlined into
+# the engine setup path), so the catalog publishes no record there and Renderer
+# skips that hook (GoldSrc_VibeSignatures PR #337).
+RENDERER_INLINED_FORCECVARS_GAMES = ("hl-3248", "hl-3266", "hl-3329", "hl-3647")
+RENDERER_FORCECVARS_GAMES = tuple(g for g in RENDERER_ALL_GAMES
+                                  if g not in RENDERER_INLINED_FORCECVARS_GAMES)
 # gameVersion -> snapshot that publishes a client module (same set as BulletPhysics).
 RENDERER_CLIENT_GAMES = BULLETPHYSICS_CLIENT_GAMES
 RENDERER_CS_CLIENT_GAMES = BULLETPHYSICS_CS_CLIENT_GAMES
@@ -206,7 +212,7 @@ RENDERER_ENGINE_ALL_FUNCTIONS = (
     "Mod_LoadModel", "Mod_LoadSpriteModel", "Mod_LoadStudioModel",
     "Mod_PointInLeaf", "Mod_UnloadSpriteTextures",
     "PVSNode", "R_AnimateLight", "R_BeamDrawList", "R_CheckVariables",
-    "R_CullBox", "R_DrawBrushModel", "R_DrawSpriteModel", "R_ForceCVars", "R_FreeDeadParticles",
+    "R_CullBox", "R_DrawBrushModel", "R_DrawSpriteModel", "R_FreeDeadParticles",
     "R_GLStudioDrawPoints", "R_GetSpriteFrame", "R_NewMap",
     "R_RenderView", "R_ResetLatched",
     "R_StudioDrawModel", "R_StudioDrawPlayer", "R_StudioMergeBones", "R_StudioRenderFinal",
@@ -270,6 +276,7 @@ RENDERER_LEGACY_TEXALLOC_HL_PATCHES = (
 )
 RENDERER_MTEX_PROBE_FUNCTIONS = ("CheckMultiTextureExtensions",)
 RENDERER_INLINED_MTEX_PROBE_FUNCTIONS = ("DT_Initialize",)
+RENDERER_FORCECVARS_FUNCTIONS = ("R_ForceCVars",)
 RENDERER_ENGINE_HL25_FUNCTIONS = ("CGame_DrawStartupVideo", "S_PrecacheSound", "S_StartDynamicSound", "S_Update")
 RENDERER_SETMODE_FUNCTIONS = ("GL_SetMode",)
 RENDERER_SETMODE_LEGACY_FUNCTIONS = ("GL_SetModeLegacy",)
@@ -954,8 +961,8 @@ def validate_sccamerafix(symbols, game_version):
 
 # Pin the published native UI entries on CS clients. Panel::Init and
 # KeyValues::LoadFromFile remain optional at runtime on other client identities;
-# the Counter-Strike branch resolves LoadControlSettings, LoadMapPage and
-# RichText::SetText there, plus Frame::Activate (the shared vtable slot the
+# the Counter-Strike branch resolves LoadControlSettings, the team menu's map page
+# entry and RichText::SetText there, plus Frame::Activate (the shared vtable slot the
 # background panel and buy menu hook) and the background panel's member offset.
 # Condition Zero Deleted Scenes publishes no background panel, so the plugin
 # skips that block for czeror and it is not gated there.
@@ -974,9 +981,13 @@ VGUI2EXTENSION_KEYVALUES_LOADFROMFILE_ALIASES = (
 )
 VGUI2EXTENSION_CS_CLIENT_FUNCTIONS = (
     "vgui2::Frame::LoadControlSettings(char const*, char const*)",
-    "CTeamMenu::LoadMapPage(char const*)",
     "vgui2::RichText::SetText(wchar_t const*)",
 )
+# The Windows 10210 clients inline CTeamMenu::LoadMapPage into CTeamMenu::Update
+# (ret 0x10); the catalog publishes Update there and the plugin hooks it instead.
+VGUI2EXTENSION_TEAMMENU_UPDATE_GAMES = ("cstrike-10210", "czero-10210", "czeror-10210")
+VGUI2EXTENSION_TEAMMENU_LOADMAPPAGE = "CTeamMenu::LoadMapPage(char const*)"
+VGUI2EXTENSION_TEAMMENU_UPDATE = "CTeamMenu::Update(char const*, bool, char const**, int)"
 VGUI2EXTENSION_CS_CLIENT_VIRTUAL_FUNCTIONS = (
     "vgui2::Frame::Activate()",
 )
@@ -1188,6 +1199,9 @@ def validate_vgui2extension(symbols, game_version, include_engine=True):
     if is_cs:
         errors += _consumer_check(symbols, game_version, VGUI2EXTENSION_CS_CLIENT_FUNCTIONS,
                                   "function", "client", "VGUI2Extension")
+        team_menu = (VGUI2EXTENSION_TEAMMENU_UPDATE if game_version in VGUI2EXTENSION_TEAMMENU_UPDATE_GAMES
+                     else VGUI2EXTENSION_TEAMMENU_LOADMAPPAGE)
+        errors += _consumer_check(symbols, game_version, (team_menu,), "function", "client", "VGUI2Extension")
         errors += _consumer_check(symbols, game_version, VGUI2EXTENSION_CS_CLIENT_VIRTUAL_FUNCTIONS,
                                   "virtualFunction", "client", "VGUI2Extension")
     if game_version in VGUI2EXTENSION_BACKGROUND_PANEL_GAMES:
@@ -1241,6 +1255,8 @@ def validate_renderer(symbols, game_version, include_engine=True, include_client
             errors += _renderer_check(symbols, game_version, RENDERER_MTEX_PROBE_FUNCTIONS, "function", "engine")
         if game_version in RENDERER_INLINED_MTEX_PROBE_GAMES:
             errors += _renderer_check(symbols, game_version, RENDERER_INLINED_MTEX_PROBE_FUNCTIONS, "function", "engine")
+        if game_version in RENDERER_FORCECVARS_GAMES:
+            errors += _renderer_check(symbols, game_version, RENDERER_FORCECVARS_FUNCTIONS, "function", "engine")
         if game_version in RENDERER_E8_GAMES:
             errors += _renderer_check(symbols, game_version, RENDERER_ENGINE_E8_FUNCTIONS, "function", "engine")
         if game_version in RENDERER_SVENGINE_GAMES:
