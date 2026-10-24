@@ -39,7 +39,8 @@ HTTP_ATTEMPTS = 3
 HTTP_RETRY_DELAYS_SECONDS = (1, 2)
 LOCK_TIMEOUT_SECONDS = 600
 HTTP_USER_AGENT = "MetaHook-GameDataUpdater/1.0"
-GAME_VERSION_PATTERN = re.compile(r"^[A-Za-z0-9_]+-[0-9]+[A-Za-z]*$")
+# Decay is the only explicitly supported standalone mod without a build number.
+GAME_VERSION_PATTERN = re.compile(r"^(?:[A-Za-z0-9_]+-[0-9]+[A-Za-z]*|decay)$")
 LOWERCASE_SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
 SHA256_PATTERN = re.compile(r"^[0-9A-Fa-f]{64}$")
 
