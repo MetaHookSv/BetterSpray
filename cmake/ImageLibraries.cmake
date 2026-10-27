@@ -1,8 +1,7 @@
 function(betterspray_add_image_libraries)
-    # Directory/function scopes isolate vendor flags and options. The parent
-    # already applies VC-LTL; dependency sources and install rules stay external.
+    # Directory/function scopes isolate vendor flags and options; dependency
+    # sources and install rules stay external.
     if(NOT TARGET FreeImage)
-        set(USE_VCLTL OFF)
         add_subdirectory("${FREEIMAGE_SOURCE_PATH}" "${PROJECT_BINARY_DIR}/thirdparty/FreeImage" EXCLUDE_FROM_ALL)
     endif()
     # The install rules also need symbols when another component owns the target.

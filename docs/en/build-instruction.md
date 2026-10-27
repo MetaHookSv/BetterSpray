@@ -30,7 +30,6 @@ Build directories are `build/x86/<Debug|Release>` and installation directories a
 CMake downloads the MetaHook SDK from the latest `main`, and fixed versions of VGUI2Extension, UtilThreadTask and UtilHTTPClient
 interface sources, SteamSDK, FreeImage, libxml2, ScopeExit and Chocobo1Hash.
 Versions are recorded in [cmake/Dependencies.cmake](../../cmake/Dependencies.cmake).
-VC-LTL 5.3.1 uses a SHA-256 verified binary package shared between configurations.
 
 Every source path below is optional; set it to reuse an existing checkout:
 
@@ -46,7 +45,6 @@ Every source path below is optional; set it to reuse an existing checkout:
 | `LIBXML2_SOURCE_PATH` | Official libxml2 2.14.2 CMake source tree |
 | `SCOPEEXIT_SOURCE_PATH` | ScopeExit root with `include/ScopeExit/ScopeExit.h` |
 | `CHOCOBO1HASH_SOURCE_PATH` | Chocobo1Hash root with `src/md5.h` |
-| `VC_LTL_Root` | Extracted VC-LTL 5.3.1 binary package |
 
 For example:
 
@@ -72,7 +70,6 @@ HTTP transfers use the separately installed UtilHTTPClient runtime.
 | `BETTERSPRAY_BUILD_TESTS` | `OFF` | Build gamedata, library and DLL loading regression tests |
 | `BETTERSPRAY_SYNC_GAMEDATA` | `ON` | Synchronize, prune and validate the plugin catalog |
 | `BETTERSPRAY_GAMEDATA_DIR` | `<build>/assets/svencoop/metahook/gamedata/betterspray` | Catalog output directory |
-| `BETTERSPRAY_DEPENDENCY_CACHE_DIR` | `thirdparty/cache` | VC-LTL archive and extraction cache |
 
 ## gamedata and offline builds
 
@@ -82,8 +79,8 @@ cached under `<build>/gamedata-sync/`. See [gamedata](gamedata.md) for runtime r
 
 With synchronization disabled, only an existing catalog is installed. A fresh build
 directory does not provide a catalog in this mode. For offline use, populate the
-source, VC-LTL and gamedata caches with an online build first, or supply local source
-paths, `VC_LTL_Root` and a prepared `BETTERSPRAY_GAMEDATA_DIR`.
+source and gamedata caches with an online build first, or supply local source
+paths and a prepared `BETTERSPRAY_GAMEDATA_DIR`.
 
 ## Regression tests
 

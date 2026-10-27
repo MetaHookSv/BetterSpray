@@ -5,7 +5,7 @@ if(NOT TARGET SteamAPIBridge)
         include(FetchContent)
         FetchContent_Declare(betterspray_steambridge
             GIT_REPOSITORY https://github.com/MetaHookSv/SteamAPIBridge
-            GIT_TAG 69d0d8c19dd03539264cf635980e362d0cfae536
+            GIT_TAG bcf1ca2723c6fa705775f6c6dad5a41c592a5554
             GIT_SUBMODULES "" SOURCE_SUBDIR _source_only)
         FetchContent_MakeAvailable(betterspray_steambridge)
         set(STEAMAPIBRIDGE_SOURCE_PATH "${betterspray_steambridge_SOURCE_DIR}")

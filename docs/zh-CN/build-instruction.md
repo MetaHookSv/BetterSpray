@@ -29,7 +29,6 @@ scripts\build-BetterSpray-x86-Release.bat
 CMake 自动下载最新 `main` 的 MetaHook SDK，以及固定版本的 VGUI2Extension、UtilThreadTask 和 UtilHTTPClient 接口源码、
 SteamSDK、FreeImage、libxml2、ScopeExit 和 Chocobo1Hash。
 版本记录在 [cmake/Dependencies.cmake](../../cmake/Dependencies.cmake)。
-VC-LTL 5.3.1 使用 SHA-256 校验的二进制包，Debug 和 Release 共用缓存。
 
 以下源码路径均为可选参数，可用于复用已有 checkout：
 
@@ -45,7 +44,6 @@ VC-LTL 5.3.1 使用 SHA-256 校验的二进制包，Debug 和 Release 共用缓�
 | `LIBXML2_SOURCE_PATH` | 官方 libxml2 2.14.2 CMake 源码目录 |
 | `SCOPEEXIT_SOURCE_PATH` | 含 `include/ScopeExit/ScopeExit.h` 的 ScopeExit 根目录 |
 | `CHOCOBO1HASH_SOURCE_PATH` | 含 `src/md5.h` 的 Chocobo1Hash 根目录 |
-| `VC_LTL_Root` | 已解压的 VC-LTL 5.3.1 二进制包 |
 
 示例：
 
@@ -68,7 +66,6 @@ lzma、命令行工具、Python 绑定和第三方测试。HTTP 传输使用另�
 | `BETTERSPRAY_BUILD_TESTS` | `OFF` | 构建 gamedata、图像库和 DLL 装载回归测试 |
 | `BETTERSPRAY_SYNC_GAMEDATA` | `ON` | 同步、裁剪并验证插件目录 |
 | `BETTERSPRAY_GAMEDATA_DIR` | `<build>/assets/svencoop/metahook/gamedata/betterspray` | gamedata 输出目录 |
-| `BETTERSPRAY_DEPENDENCY_CACHE_DIR` | `thirdparty/cache` | VC-LTL 压缩包及解压缓存 |
 
 ## gamedata 和离线构建
 
@@ -76,8 +73,8 @@ lzma、命令行工具、Python 绑定和第三方测试。HTTP 传输使用另�
 原始快照缓存在 `<build>/gamedata-sync/`。运行时要求见 [gamedata](gamedata.md)。
 
 关闭同步时，仅安装已有目录；新的构建目录在此模式下不会提供 gamedata。
-离线构建前应通过一次在线构建准备源码、VC-LTL 和 gamedata 缓存，
-或提供本地源码路径、`VC_LTL_Root` 和已准备的 `BETTERSPRAY_GAMEDATA_DIR`。
+离线构建前应通过一次在线构建准备源码和 gamedata 缓存，
+或提供本地源码路径和已准备的 `BETTERSPRAY_GAMEDATA_DIR`。
 
 ## 回归测试
 

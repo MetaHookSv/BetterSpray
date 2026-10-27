@@ -26,11 +26,10 @@ BetterSpray/
 │   └── wad3.hpp              # WAD3 file format definitions
 ├── include/Interface/        # Existing SprayDatabase public interface
 ├── assets/svencoop/          # Game resources installed to the prefix root
-├── cmake/                    # Explicit sources, pinned dependencies and VC-LTL
+├── cmake/                    # Explicit sources, pinned dependencies
 ├── scripts/                  # CMake build entry points and gamedata tools
 ├── tests/                    # Resolver, library and DLL loading regression tests
 ├── docs/en/, docs/zh-CN/      # Bilingual topic pages
-├── thirdparty/cache/         # Ignored VC-LTL binary cache
 ├── build/x86/<configuration>/    # Ignored build output
 ├── install/x86/<configuration>/  # Ignored install output
 └── CMakeLists.txt            # Windows MSVC x86 build and install rules
@@ -136,7 +135,7 @@ Send a task to the main thread via GameThreadTaskScheduler, and upload to OpenGL
 
 CMake automatically fetches the dependencies in `cmake/Dependencies.cmake`: MetaHook from the latest `main`, the rest at fixed commits.
 Optional `*_SOURCE_PATH` parameters and same-named environment variables reuse
-external, read-only source trees. VC-LTL 5.3.1 uses a hash-verified binary cache.
+external, read-only source trees.
 
 - **MetaHook SDK**: shared HLSDK, SourceSDK and VGUI sources; API 115 or newer
 - **VGUI2Extension / UtilThreadTask**: public headers from their independent repositories
@@ -178,7 +177,7 @@ consistent when consumption changes.
 
 ### Configuration and verification
 
-- Windows MSVC x86, CMake 3.21+, C++20, Debug / Release, static CRT and VC-LTL
+- Windows MSVC x86, CMake 3.21+, C++20, Debug / Release, static CRT
 - Preserve the plugin exports, SprayDatabase interface version and virtual method order
 - CTest covers gamedata success/failure, PNG/WebP, UTF-8 HTML/XPath and DLL factories
 - Tests retain assertions in Release; configuration/docs/generated file text are not test assertions

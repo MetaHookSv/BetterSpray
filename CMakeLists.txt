@@ -21,7 +21,6 @@ endif()
 
 include(cmake/Dependencies.cmake)
 betterspray_prepare_dependencies()
-include("${VC_LTL_Root}/VC-LTL helper for cmake.cmake")
 include(cmake/SteamAPIBridge.cmake)
 include(cmake/ImageLibraries.cmake)
 betterspray_add_image_libraries()
